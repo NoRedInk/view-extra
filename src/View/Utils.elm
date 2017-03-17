@@ -1,9 +1,9 @@
-module View.Utils exposing (viewIf, viewJust, viewMaybe, viewElementByPosition, Position(..))
+module View.Utils exposing (viewIf, viewHiddenIf, viewJust, viewMaybe, viewElementByPosition, Position(..))
 
 {-|
 
 # Conditional views
-@docs viewIf, viewJust, viewMaybe
+@docs viewIf, viewHiddenIf, viewJust, viewMaybe
 
 # Patterned views
 @docs Position, viewElementByPosition
@@ -24,10 +24,10 @@ viewIf view condition =
     text ""
 
 
-{-| Hide with `display: none` if condition is not met.
+{-| Hide with `display: none` if condition is _not_ met.
 -}
-hideIf : Html msg -> Bool -> Html msg
-hideIf view condition =
+viewHiddenIf : Html msg -> Bool -> Html msg
+viewHiddenIf view condition =
   if condition then
     span [] [ view ]
   else
@@ -48,12 +48,12 @@ viewJust view maybe =
 
 {-| Use a view based on the `Maybe` value.
 
-  view : Maybe Feedback -> Html msg
-  view feedback =
-    div []
-      [ h1 [] [ text "Feedback" ]
-      , viewMaybe viewFeedback viewNoFeedbackYet feedback
-      ]
+    view : Maybe Feedback -> Html msg
+    view feedback =
+      div []
+        [ h1 [] [ text "Feedback" ]
+        , viewMaybe viewFeedback viewNoFeedbackYet feedback
+        ]
 
 -}
 viewMaybe : (a -> Html msg) -> Html msg ->  Maybe a -> Html msg
@@ -78,7 +78,7 @@ type Position
   | Last
 
 
-{-| View the first, middle and last element differently and seperately if only containing one element.
+{-| View the element differently based on it's position.
 -}
 viewElementByPosition : (Position -> a -> Html msg) -> List a -> List (Html msg)
 viewElementByPosition viewFromPosition list =
