@@ -1,2 +1,2 @@
-# elm-view
-Tiny view helpers
+# elm-view-utils
+Just a bunch of tiny view helpers.
