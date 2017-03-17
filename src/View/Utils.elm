@@ -1,8 +1,12 @@
-module View exposing (viewIf, viewJust, viewMaybe, viewElementByPosition, Position(..))
+module View.Utils exposing (viewIf, viewJust, viewMaybe, viewElementByPosition, Position(..))
 
 {-|
 
-@docs viewIf, viewJust, viewMaybe, viewElementByPosition, Position
+# Conditional views
+@docs viewIf, viewJust, viewMaybe
+
+# Patterned views
+@docs Position, viewElementByPosition
 
 -}
 
@@ -42,13 +46,13 @@ viewJust view maybe =
       text ""
 
 
-{-| Use view based on `Maybe`.
+{-| Use a view based on the `Maybe` value.
 
   view : Maybe Feedback -> Html msg
   view feedback =
     div []
       [ h1 [] [ text "Feedback" ]
-      , viewMaybe viewFeedback viewError feedback
+      , viewMaybe viewFeedback viewNoFeedbackYet feedback
       ]
 
 -}
@@ -62,6 +66,11 @@ viewMaybe viewValue viewError maybe =
       viewError
 
 
+
+-- VIEW FROM PATTERN
+
+
+{-| -}
 type Position
   = Singleton
   | First

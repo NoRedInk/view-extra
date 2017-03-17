@@ -1,7 +1,7 @@
 module Main exposing (main)
 
 import Html exposing (..)
-import View exposing (..)
+import View.Utils exposing (..)
 
 justStuff : Maybe Int
 justStuff =
@@ -16,17 +16,17 @@ nothingStuff =
 main : Html msg
 main =
   div []
-    [ viewJust (toString >> text) justStuff
-    , viewIf (text "hey") True
-    , viewMaybe viewValue viewError nothingStuff
+    [ div [] [ viewJust viewValue justStuff ]
+    , div [] [ viewIf (text "is true") True ]
+    , div [] [ viewMaybe viewValue viewError nothingStuff ]
     ]
 
 
 viewValue : Int -> Html msg
 viewValue value =
-  text <| "value" ++ toString value
+  text <| "value: " ++ toString value
 
 
 viewError : Html msg
 viewError =
-  text "Error"
+  text "is error"
