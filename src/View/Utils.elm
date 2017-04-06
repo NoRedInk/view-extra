@@ -1,9 +1,9 @@
-module View.Utils exposing (viewIf, viewHiddenIf, viewJust, viewMaybe, viewElementByPosition, Position(..))
+module View.Utils exposing (viewIf, viewHiddenIf, viewJust, viewMaybe, viewIfElements, viewElementByPosition, Position(..))
 
 {-|
 
 # Conditional views
-@docs viewIf, viewHiddenIf, viewJust, viewMaybe
+@docs viewIf, viewHiddenIf, viewJust, viewMaybe, viewIfElements
 
 # Patterned views
 @docs Position, viewElementByPosition
@@ -64,6 +64,32 @@ viewMaybe viewValue viewError maybe =
 
     Nothing ->
       viewError
+
+
+{-| View if list has elements.
+
+    type alias Category =
+      { title : String
+      , items : List String
+      }
+
+    view : List Category -> Html msg
+    view categories =
+      List.map (viewIfElements viewCategory) categories
+
+    viewCategory : Category -> Html msg
+    viewCategory category =
+      div []
+        [ h1 [] [ text category.title ]
+        , div [] (List.map viewStuff category.items)
+        ]
+-}
+viewIfElements : Html msg -> List a -> Html msg
+viewIfElements view list =
+  if List.isEmpty list then
+    text ""
+  else
+    view
 
 
 
