@@ -1,13 +1,13 @@
 {
     "version": "1.1.1",
     "summary": "Small view helpers.",
-    "repository": "https://github.com/NoRedInk/elm-view-utils.git",
+    "repository": "https://github.com/NoRedInk/elm-view-extra.git",
     "license": "BSD3",
     "source-directories": [
         "./src"
     ],
     "exposed-modules": [
-        "View.Utils"
+        "View.Extra"
     ],
     "dependencies": {
         "elm-lang/core": "5.1.1 <= v < 6.0.0",
