@@ -1,11 +1,15 @@
-module View.Extra exposing (viewIf, viewHiddenIf, viewJust, viewMaybe, viewIfElements, viewElementByPosition, Position(..))
+module View.Extra exposing (Position(..), viewElementByPosition, viewHiddenIf, viewIf, viewIfElements, viewJust, viewMaybe)
 
 {-|
 
+
 # Conditional views
+
 @docs viewIf, viewHiddenIf, viewJust, viewMaybe, viewIfElements
 
+
 # Patterned views
+
 @docs Position, viewElementByPosition
 
 -}
@@ -16,15 +20,15 @@ import Html.Attributes exposing (style)
 
 {-| View only if condition is met.
 -}
-viewIf : Html msg -> Bool -> Html msg
+viewIf : (() -> Html msg) -> Bool -> Html msg
 viewIf view condition =
     if condition then
-        view
+        view ()
     else
         text ""
 
 
-{-| Hide with `display: none` if condition is _not_ met.
+{-| Add `display: none` to view if condition is _not_ met.
 -}
 viewHiddenIf : Html msg -> Bool -> Html msg
 viewHiddenIf view condition =
@@ -34,7 +38,7 @@ viewHiddenIf view condition =
         span [ style [ ( "display", "none" ) ] ] [ view ]
 
 
-{-| View only if `Maybe` is a `Just`.
+{-| View value of if `Maybe` is a `Just`, otherwise show nothing.
 -}
 viewJust : (a -> Html msg) -> Maybe a -> Html msg
 viewJust view maybe =
@@ -50,20 +54,20 @@ viewJust view maybe =
 
     view : Maybe Feedback -> Html msg
     view feedback =
-      div []
-        [ h1 [] [ text "Feedback" ]
-        , viewMaybe viewFeedback viewNoFeedbackYet feedback
-        ]
+        div []
+            [ h1 [] [ text "Feedback" ]
+            , viewMaybe viewFeedback viewNoFeedbackYet feedback
+            ]
 
 -}
-viewMaybe : (a -> Html msg) -> Html msg -> Maybe a -> Html msg
+viewMaybe : (a -> Html msg) -> (() -> Html msg) -> Maybe a -> Html msg
 viewMaybe viewValue viewError maybe =
     case maybe of
         Just whatever ->
             viewValue whatever
 
         Nothing ->
-            viewError
+            viewError ()
 
 
 {-| View if resulting list has elements.
@@ -106,4 +110,4 @@ viewElementByPosition viewFromPosition list =
                     else
                         viewFromPosition Middle element
             in
-                List.indexedMap viewElement list
+            List.indexedMap viewElement list
