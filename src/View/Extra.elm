@@ -1,4 +1,4 @@
-module View.Extra exposing (Position(..), viewElementByPosition, viewHiddenIf, viewIf, viewIfElements, viewJust, viewMaybe)
+module View.Extra exposing (viewHiddenIf, viewIf, viewIfElements, viewJust, viewMaybe)
 
 {-|
 
@@ -6,11 +6,6 @@ module View.Extra exposing (Position(..), viewElementByPosition, viewHiddenIf, v
 # Conditional views
 
 @docs viewIf, viewHiddenIf, viewJust, viewMaybe, viewIfElements
-
-
-# Patterned views
-
-@docs Position, viewElementByPosition
 
 -}
 
@@ -78,36 +73,3 @@ viewIfElements view toList stuff =
         text ""
     else
         view
-
-
-
--- VIEW FROM PATTERN
-
-
-{-| -}
-type Position
-    = Singleton
-    | First
-    | Middle
-    | Last
-
-
-{-| View the element differently based on it's position.
--}
-viewElementByPosition : (Position -> a -> Html msg) -> List a -> List (Html msg)
-viewElementByPosition viewFromPosition list =
-    case list of
-        [ singleton ] ->
-            List.singleton (viewFromPosition Singleton singleton)
-
-        _ ->
-            let
-                viewElement index element =
-                    if index == 0 then
-                        viewFromPosition First element
-                    else if index == List.length list - 1 then
-                        viewFromPosition Last element
-                    else
-                        viewFromPosition Middle element
-            in
-            List.indexedMap viewElement list
