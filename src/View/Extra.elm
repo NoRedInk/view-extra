@@ -51,7 +51,7 @@ viewJust view maybe =
     view feedback =
         div []
             [ h1 [] [ text "Feedback" ]
-            , viewMaybe viewFeedback viewNoFeedbackYet feedback
+            , viewMaybe viewFeedback viewPlaceholder feedback
             ]
 
 -}
