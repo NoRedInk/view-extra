@@ -67,9 +67,9 @@ viewMaybe viewValue viewError maybe =
 
 {-| View if resulting list has elements.
 -}
-viewIfElements : Html msg -> (a -> List b) -> a -> Html msg
-viewIfElements view toList stuff =
-    if List.isEmpty (toList stuff) then
+viewIfElements : (() -> Html msg) -> List b -> Html msg
+viewIfElements view list =
+    if List.isEmpty list then
         text ""
     else
-        view
+        view ()
