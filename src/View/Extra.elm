@@ -30,7 +30,7 @@ viewHiddenIf view condition =
     if condition then
         span [] [ view ]
     else
-        span [ style [ ( "display", "none" ) ] ] [ view ]
+        span [ style "display" "none" ] [ view ]
 
 
 {-| View value of if `Maybe` is a `Just`, otherwise show nothing.
